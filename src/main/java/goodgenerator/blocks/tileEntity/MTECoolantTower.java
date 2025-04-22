@@ -21,6 +21,7 @@ import goodgenerator.blocks.tileEntity.base.MTETooltipMultiBlockBaseEM;
 import goodgenerator.util.DescTextLocalization;
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.OrePrefixes;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -30,6 +31,7 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTModHandler;
+import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
@@ -105,13 +107,17 @@ public class MTECoolantTower extends MTETooltipMultiBlockBaseEM implements ICons
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("Coolant Tower")
-            .addInfo("Turn Steam back to Distilled Water.")
-            .addController("Mid of the second layer")
+        tt.addMachineType("machtype.coolanttower")
+            .addInfo("gt.mb.coolanttower.desc.1")
+            .addController("gt.mb.corepos.f2m")
             .addCasingInfoExactly("Light Concrete", 277, false)
-            .addCasingInfoExactly("Tungstencarbide Frame Box", 28, false)
-            .addInputHatch("Input Hatch", 1)
-            .addOutputHatch("Output Hatch", 1)
+            .addCasingInfoExactly(
+                GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.TungstenCarbide, 1)
+                    .getDisplayName(),
+                28,
+                false)
+            .addInputHatch("<hint>", 1)
+            .addOutputHatch("<hint>", 1)
             .toolTipFinisher();
         return tt;
     }

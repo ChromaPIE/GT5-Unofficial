@@ -1,5 +1,6 @@
 package gregtech.api.util;
 
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.removeEnd;
 
 import java.util.*;
@@ -12,6 +13,7 @@ import javax.annotation.Nullable;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 
+import org.apache.commons.lang3.Range;
 import org.jetbrains.annotations.NotNull;
 
 import com.github.bsideup.jabel.Desugar;
@@ -253,7 +255,7 @@ public class MultiblockTooltipBuilder {
     public MultiblockTooltipBuilder addController(String info) {
         addStructurePart(
             "GT5U.MBTT.Controller",
-            info.equals("fs") ? "gt.mb.corepos.fs" : info.equals("fbm") ? "gt.mb.corepos.fbm" : info);
+            info.equals("fc") ? "gt.mb.corepos.fc" : info.equals("fbm") ? "gt.mb.corepos.fbm" : info);
         return this;
     }
 
@@ -262,16 +264,12 @@ public class MultiblockTooltipBuilder {
      * (indent)countx casingName (tiered)
      *
      * @param casingName Name of the Casing.
-     * @param isTiered   Flag if this casing accepts multiple tiers (e.g. coils)
+     * @param tier       Flag if this casing accepts multiple tiers (e.g. coils)<br>
+     *                   Accepts boolean, int (as voltage index) and string
      * @return Instance this method was called on.
      */
-    public MultiblockTooltipBuilder addCasingInfoExactly(String casingName, int count, boolean isTiered) {
-        return addCasingInfoExactlyColored(
-            casingName,
-            EnumChatFormatting.GRAY,
-            count,
-            EnumChatFormatting.GOLD,
-            isTiered);
+    public MultiblockTooltipBuilder addCasingInfoExactly(String casingName, int count, Object tier) {
+        return addCasingInfoExactlyColored(casingName, EnumChatFormatting.GRAY, count, EnumChatFormatting.GOLD, tier);
     }
 
     /**
@@ -279,17 +277,37 @@ public class MultiblockTooltipBuilder {
      * (indent)countx casingName (tiered)
      *
      * @param casingName Name of the Casing.
-     * @param isTiered   Flag if this casing accepts multiple tiers (e.g. coils)
+     * @param tier       Flag if this casing accepts multiple tiers (e.g. coils)
      * @param countColor Color of the casing count text
      * @param textColor  Color of the casing name text
      * @return Instance this method was called on.
      */
     public MultiblockTooltipBuilder addCasingInfoExactlyColored(String casingName, EnumChatFormatting textColor,
-        int count, EnumChatFormatting countColor, boolean isTiered) {
+        int count, EnumChatFormatting countColor, Object tier) {
+
+        boolean isTiered = false;
+        int tierIndex = -1;
+        String tierText = "";
+
+        if (tier instanceof Boolean) {
+            isTiered = (Boolean) tier;
+        } else if (tier instanceof Integer) {
+            tierIndex = (Integer) tier;
+        } else if (tier instanceof String) {
+            tierText = (String) tier;
+        }
+
         addStructureInfo(
             "" + countColor + count + "x " + textColor + "%s%s",
             casingName,
-            (isTiered ? "GT5U.MBTT.Tiered" : " "));
+            (Range.between(0, 15)
+                .contains(tierIndex))
+                    ? StatCollector.translateToLocalFormatted(
+                        "GT5U.MBTT.TieredDetailed",
+                        GTValues.TIER_COLORS[tierIndex] + GTValues.VN[tierIndex])
+                    : isNotEmpty(tierText)
+                        ? StatCollector.translateToLocalFormatted("GT5U.MBTT.TieredDetailed", tierText)
+                        : isTiered ? "GT5U.MBTT.Tiered" : " ");
         return this;
     }
 

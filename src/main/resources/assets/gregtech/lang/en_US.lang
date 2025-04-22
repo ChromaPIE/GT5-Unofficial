@@ -716,6 +716,7 @@ GT5U.MBTT.Structure=§fStructure:
 GT5U.MBTT.Controller=§fController: §7%s
 GT5U.MBTT.Minimum= (minimum)
 GT5U.MBTT.Tiered= (tiered)
+GT5U.MBTT.TieredDetailed= (tiered: %s+§7)
 GT5U.MBTT.PartInfo=§f%s: §7%s
 GT5U.MBTT.PartInfoHint=Hint block with dot %d
 GT5U.MBTT.AnyGlass=Any Glass
@@ -3077,18 +3078,25 @@ achievement.gt.blockmachines.gtpp.multimachine.replicator.desc=[AL] Pickup this 
 # CONTEXT: Uses sub channel (subchannel) for (channelpurpose)
 # (subchannel) is provided by the code and shouldn't be localized
 channelpurpose.glass_tier=Glass Tier
+channelpurpose.peuc_tier=Precise Electronic Unit Casing Tier
+channelpurpose.casing_tier=Machine Casing Tier
 
 # Used in addMachineType
 # CONTEXT: Machine type: (machtype)
 machtype.purif_plant=Purification Plant
 machtype.fluid_tank=Fluid Tank
-machtype.mapiary=Mega Apiary
-machtype.mapiary.short=Mapiary
+machtype.mapiary.long=Mega Apiary
+machtype.mapiary=Mapiary
+machtype.assembler=Assembler
+machtype.prass.long=Precise Assembler
+machtype.prass=PrAss
+machtype.coolanttower=Coolant Tower
 
 # Used in addController. These are some commonly used shared ones
 # CONTEXT: Controller: (corepos)
-gt.mb.corepos.fs=Front center
+gt.mb.corepos.fc=Front center
 gt.mb.corepos.fbm=Front bottom middle
+gt.mb.corepos.f2m=Front middle of 2nd layer
 
 gt.mb.hint_block=Hint block with dot %d
 
@@ -3103,10 +3111,9 @@ gt.mb.purification_plant.desc.3=Every recipe has a base chance of success. Succe
 gt.mb.purification_plant.desc.4=Every purification unit has a configuration window to configure maximum parallel amount.[BR]This will only scale purified water input, ALL fluid output and power usage.[BR]Other catalysts and outputs are unchanged.[BR]Toggle debug mode to reduce cycle time to 30s but disable water I/O.
 gt.mb.purification_plant.desc.5=§b§oContaminants and ionized particles in water can cause significant imperfections in delicate[BR]§b§oprocesses related to the cutting and engraving of silicon wafers and chips. It is crucial that[BR]§b§othe water is systematically purified through a series of increasingly precise and complex[BR]§b§opurification processes, and this multiblock is the heart of the operation.
 gt.mb.purification_plant.s_desc.1=Requires water to be placed in the tank.
-
-gt.mb.yottank.corepos=Front of the second layer
 gt.mb.yottank.desc.1=The max output speed is decided by the amount of stored liquid and the output hatch's capacity.[BR]The max fluid cell tier is limited by the glass tier.[BR]HV glass for T1, EV glass for T2, IV glass for T3. . .[BR]The max height of the cell blocks is 15.
-
+gt.mb.coolanttower.desc.1=Turn Steam back to Distilled Water.
+gt.mb.pcb.desc.1=§6§lIMPORTANT! Check the configuration menu before building.[BR]Tier of the machine determines the available recipes.[BR]Machine tier (1-3) is set in the controller GUI.[BR]The configuration menu can be used to add upgrades.[BR]Each tier and upgrade requires additional structures.[BR]Power consumption is multiplied by Sqrt(structures).[BR]Tier 2 and 3 allow parallel by using extra nanites.[BR]Nanites have to be placed in a Nanite Containment Bus.[BR]The formula for parallels is the amount of nanites^0.75, rounded up.[BR]Maximum parallel is 256.[BR]Recipes require a cooling upgrade to be overclocked.[BR]Liquid Cooling uses 10 L/s of distilled water and enables default overclocks.[BR]Thermosink uses 10 L/s of Super Coolant and enables perfect overclocks.[BR]Trace size can be changed to modify the material usage and machine speed.
 gt.mb.mapiary.desc.1=The ideal home for your bees[BR]Use screwdriver to change primary mode (INPUT/OUTPUT/OPERATING)[BR]Use screwdriver + shift to change operation mode (NORMAL/SWARMER)
 gt.mb.mapiary.desc.2=§6Input Mode:[BR]- Does not take power[BR]- Put your queens in the input bus to put them in the internal buffer
 gt.mb.mapiary.desc.3=§6Output Mode:[BR]- Does not take power[BR]- Will give your bees back to output bus

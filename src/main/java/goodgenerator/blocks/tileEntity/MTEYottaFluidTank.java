@@ -448,7 +448,7 @@ public class MTEYottaFluidTank extends MTETooltipMultiBlockBaseEM implements ICo
         tt.addMachineType("machtype.fluid_tank")
             .addInfo("gt.mb.yottank.desc.1")
             .beginVariableStructureBlock(5, 5, 1, 15, 5, 5, false)
-            .addController("gt.mb.yottank.corepos")
+            .addController("gt.mb.corepos.f2m")
             .addCasingInfoExactly(
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Steel, 1)
                     .getDisplayName(),
