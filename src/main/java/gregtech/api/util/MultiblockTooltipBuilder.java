@@ -151,8 +151,8 @@ public class MultiblockTooltipBuilder {
      * @return Instance this method was called on.
      *
      * @deprecated Use {@link MultiblockTooltipBuilder#addInfo}<br>
-     *             and use {@link GTUtility#YAP_SEPARATOR} ({@code [BR]}) in lang entries as separator.<br>
-     *             Like {@code gt.a_multiblock.desc.1=Yaps a lot,[BR]so we have to separate it.}
+     *             and use {@link GTUtility#YAP_SEPARATOR} ({@code \n}) in lang entries as separator.<br>
+     *             Like {@code gt.a_multiblock.desc.1=Yaps a lot,\nso we have to separate it.}
      */
     @Deprecated
     public MultiblockTooltipBuilder addInfoAll(String... infoStrings) {

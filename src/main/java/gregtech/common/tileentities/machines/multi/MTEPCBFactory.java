@@ -60,7 +60,9 @@ import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import com.gtnewhorizons.modularui.common.widget.textfield.NumericWidget;
 
 import gregtech.api.GregTechAPI;
+import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures.BlockIcons;
 import gregtech.api.gui.modularui.GTUITextures;
@@ -84,14 +86,7 @@ import gregtech.api.recipe.metadata.PCBFactoryTierKey;
 import gregtech.api.recipe.metadata.PCBFactoryUpgrade;
 import gregtech.api.recipe.metadata.PCBFactoryUpgradeKey;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GTModHandler;
-import gregtech.api.util.GTRecipe;
-import gregtech.api.util.GTRecipeConstants;
-import gregtech.api.util.GTUtility;
-import gregtech.api.util.IGTHatchAdder;
-import gregtech.api.util.MultiblockTooltipBuilder;
-import gregtech.api.util.OverclockCalculator;
-import gregtech.api.util.ParallelHelper;
+import gregtech.api.util.*;
 import gregtech.api.util.shutdown.ShutDownReasonRegistry;
 import gregtech.common.blocks.BlockCasings8;
 
@@ -849,52 +844,52 @@ public class MTEPCBFactory extends MTEExtendedPowerMultiBlockBase<MTEPCBFactory>
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("Circuit Board Fabricator")
+        tt.addMachineType("machtype.pcb")
             .addInfo("gt.mb.pcb.desc.1")
             .addTecTechHatchInfo()
             .beginStructureBlock(30, 38, 13, false)
             .addMaintenanceHatch(EnumChatFormatting.GOLD + "1", 1)
-            .addEnergyHatch(
-                EnumChatFormatting.GOLD + "1"
-                    + EnumChatFormatting.GRAY
-                    + "-"
-                    + EnumChatFormatting.GOLD
-                    + "2"
-                    + EnumChatFormatting.GRAY
-                    + " or "
-                    + EnumChatFormatting.GOLD
-                    + "1"
-                    + EnumChatFormatting.GRAY
-                    + " TT energy hatch.",
-                1)
-            .addInputBus(EnumChatFormatting.GOLD + "0" + EnumChatFormatting.GRAY + "+", 1)
-            .addOutputBus(EnumChatFormatting.GOLD + "0" + EnumChatFormatting.GRAY + "+", 1)
-            .addInputHatch(EnumChatFormatting.GOLD + "0" + EnumChatFormatting.GRAY + "+", 1)
+            .addEnergyHatch("gt.mb.pcb.ehatch_info", 1)
+            .addInputBus("gt.mb.0plus", 1)
+            .addOutputBus("gt.mb.0plus", 1)
+            .addInputHatch("gt.mb.0plus", 1)
+            .addStructurePart(
+                ItemList.Hatch_Nanite.getInternalStack_unsafe().getDisplayName(),
+                "gt.mb.0plus")
+            .addStructurePart("gt.mb.pcb.chatch", "gt.mb.pcb.chatch.info")
+            .addStructureInfo("gt.mb.pcb.info.1")
             .addStructureInfo(
-                EnumChatFormatting.WHITE + "Nanite Containment Bus: "
-                    + EnumChatFormatting.GOLD
-                    + "0"
+                EnumChatFormatting.GOLD + "40"
                     + EnumChatFormatting.GRAY
-                    + "+")
+                    + " "
+                    + GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.DamascusSteel, 1)
+                        .getDisplayName())
             .addStructureInfo(
-                EnumChatFormatting.WHITE + "Coolant Hatch (Input Hatch): "
-                    + EnumChatFormatting.GOLD
-                    + "1"
+                EnumChatFormatting.GOLD + "9"
                     + EnumChatFormatting.GRAY
-                    + " Center of the Liquid Cooling/Thermosink")
+                    + " "
+                    + GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.VibrantAlloy, 1)
+                        .getDisplayName())
             .addStructureInfo(
-                EnumChatFormatting.BLUE + "Base Multi (Tier "
-                    + EnumChatFormatting.DARK_PURPLE
-                    + 1
-                    + EnumChatFormatting.BLUE
-                    + "):")
-            .addStructureInfo(EnumChatFormatting.GOLD + "40" + EnumChatFormatting.GRAY + " Damascus Steel Frame Box")
-            .addStructureInfo(EnumChatFormatting.GOLD + "9" + EnumChatFormatting.GRAY + " Vibrant Alloy Frame Box")
-            .addStructureInfo(EnumChatFormatting.GOLD + "25" + EnumChatFormatting.GRAY + " Reinforced Glass")
+                EnumChatFormatting.GOLD + "25"
+                    + EnumChatFormatting.GRAY
+                    + " "
+                    + Materials.ReinforceGlass.mLocalizedName)
             .addStructureInfo(
-                EnumChatFormatting.GOLD + "77" + EnumChatFormatting.GRAY + " Basic Photolithography Framework Casing")
-            .addStructureInfo(EnumChatFormatting.GOLD + "12" + EnumChatFormatting.GRAY + " Grate Machine Casing")
-            .addStructureInfo(EnumChatFormatting.GOLD + "25" + EnumChatFormatting.GRAY + " Plascrete Block")
+                EnumChatFormatting.GOLD + "77"
+                    + EnumChatFormatting.GRAY
+                    + " "
+                    + ItemList.BasicPhotolithographicFrameworkCasing.getInternalStack_unsafe().getDisplayName())
+            .addStructureInfo(
+                EnumChatFormatting.GOLD + "12"
+                    + EnumChatFormatting.GRAY
+                    + " "
+                    + ItemList.Casing_Grate.getInternalStack_unsafe().getDisplayName())
+            .addStructureInfo(
+                EnumChatFormatting.GOLD + "25"
+                    + EnumChatFormatting.GRAY
+                    + " "
+                    + ItemList.Block_Plascrete.getInternalStack_unsafe().getDisplayName())
             .addStructureInfo(
                 EnumChatFormatting.BLUE + "Tier "
                     + EnumChatFormatting.DARK_PURPLE
